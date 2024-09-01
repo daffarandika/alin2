@@ -1,0 +1,386 @@
+\documentclass[fleqn]{article}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tikz-cd}
+\usepackage[makeroom]{cancel}
+\usepackage[paperheight=29.7cm, paperwidth=23cm, margin=3cm, top=3cm, bottom=2cm, left=3cm, right=2cm]{geometry}
+\usepackage{array}
+\usepackage{circuitikz}
+
+\author{Daffa Randika (H1A023089)}
+\date{}
+\title{Tugas Pertemuan 2 Deret Taylor dan Analisa Galat}
+
+\begin{document}
+	\pagenumbering{gobble}
+    \maketitle
+	\begin{enumerate}
+		% 1
+		\item Tentukan polinomium Taylor hingga derajat 5 untuk fungsi $f$, $f(x) = e^{sinx}$, disekitar titik $x = 0$. \\
+			\textbf{Jawab: }
+			\begin{flalign*}
+				f(x) &= e^{sinx} &&\\
+				f'(x) &= e^{sinx} \cdot cosx&& \\
+				f''(x) &= e^{sinx} \cdot (cos^{2}x - sinx)&& \\
+				f'''(x) &= e^{sinx} \cdot (cos^{3}x - 3 cosx \cdot sinx + cosx )&& \\
+				f^{(4)} &= e^{sinx} \cdot (cos^{4}x - 6 cos^{2}x \cdot sinx + 3 sin^{2}x - 4 cos^{2} + 1)&& \\
+				f^{(5)} &= e^{sinx} \cdot (cos^{5}x - 10 cos^{3}x \cdot sinx + 15 cosx \cdot sin^{2}x  - 10 cosx \cdot sinx + cosx)&&
+			\end{flalign*}
+			\begin{flalign*}
+				f(0) &= 1&& \\
+				f'(0) &= 1 \cdot 1 = 1&& \\
+				f''(0) &= 1 (1-0) = 1&& \\
+				f'''(0) &= 1 (1-0+1) = 2&& \\
+				f^{(4)}(0) &= 1 (1-0+0+4 \cdot 1 + 1) -2&& \\
+				f^{(5)}(0) &= 1 (1-0+0-0+1) = 2&& \\
+			\end{flalign*}
+			$\therefore $ Polinomium taylornya adalah:
+			\begin{align*}
+				f(x) = 1 + x + \frac{1}{2!}x^2 + \frac{2}{3!}x^3 + \frac{2}{4!}x^4 + \frac{2}{5!}x^5
+			\end{align*}
+
+		% 2
+		\item Tentukan polinomium Taylor hingga derajat 8 untuk fungsi $f$, $f(x) = xsinx + cosx$, disekitar titik $x = 3$. \\
+			\textbf{Jawab: } 
+			\begin{flalign*}
+				f(x) &= xsinx + cosx \\
+				f'(x) &= xcosx \\
+				f''(x) &= cosx-xsinx \\ 
+				f'''(x) &= -2 sinx - xcosx \\
+				f^{(4)}(x) &= -3cosx + xsinx \\
+				f^{(5)}(x) &= 4sinx + xcosx \\
+				f^{(6)}(x) &= 5cosx - xsinx \\
+				f^{(7)}(x) &= -6sinx - xcosx \\
+				f^{(8)}(x) &= -7cosx + xsinx
+			\end{flalign*}
+			\begin{flalign*}
+				f(3) &= 3sin3 + cos3 \\
+				f'(3) &= 3cos3 \\
+				f''(3) &= cos3-3sin3 \\ 
+				f'''(3) &= -2 sin3 - 3cos3 \\
+				f^{(4)}(3) &= -3cos3 + 3sin3 \\
+				f^{(5)}(3) &= 4sin3 + 3cos3 \\
+				f^{(6)}(3) &= 5cos3 - 3sin3 \\
+				f^{(7)}(3) &= -6sin3 - 3cos3 \\
+				f^{(8)}(3) &= -7cos3 + 3sin3 \\
+			\end{flalign*}
+			$\therefore $ Polinomium taylornya adalah:
+			\begin{flalign*}
+				f(x) =& f(3) + f'(3)(x-3) + \frac{f''(3)}{2!}(x-3)^2 \cdots + \frac{f^{(8)}(3)}{8!}(x-3)^8 \\ \\
+				f(x) =&\frac{3cos3}{1!}(x-3)^1 + \frac{cos3-3sin3}{2!}(x-3)^2 + \\
+					 &\frac{-2sin3 - 3cos3}{3!}(x-3)^3 + \frac{-3cos3 + 3sin3}{4!}(x-3)^4 + \\
+					 &\frac{4sin3 + 3cos3 }{5!}(x-3)^5 + \frac{5cos3 - 3sin3 }{6!}(x-3)^6 + \\
+					 &\frac{-6sin3 - 3cos3}{7!}(x-3)^7 + \frac{-7cos3 + 3sin3}{8!}(x-3)^8
+			\end{flalign*}
+
+		% 3
+		\item Tentukan polinomium Taylor hingga derajat 10 untuk fungsi $f$, $f(x) = xe^xsin^2x$, disekitar titik $x = 0$. \\
+			\textbf{Jawab: }
+			\begin{flalign*}
+				f(x) &= xe^x+sin^2x \\
+				f'(x) &= (x+1)e^x+sin2x \\
+				f''(x) &= (x+2)e^x+2cos2x \\ 
+				f'''(x) &= (x+3)e^x-4sin2x \\
+				f^{(4)}(x) &= (x+4)e^x-8cos2x \\
+				f^{(5)}(x) &= (x+2)e^x+16sin2x\\
+				f^{(6)}(x) &= (x+2)e^x+32cos2x\\
+				f^{(7)}(x) &= (x+2)e^x-64sin2x \\
+				f^{(8)}(x) &= (x+2)e^x-128cos2x \\
+				f^{(9)}(x) &= (x+2)e^x+256sin2x \\
+				f^{(10)}(x) &= (x+2)e^x+512cos2x
+			\end{flalign*}
+			\begin{flalign*}
+				f(0) &= 0 \\
+				f'(0) &= 1+0=1 \\
+				f''(0) &= 2+2=4 \\
+				f'''(0) &= 3+0=3 \\
+				f^{(4)}(0) &= 4-8=-4 \\
+				f^{(5)}(0) &= 5+0=5 \\
+				f^{(6)}(0) &= 6+32=38 \\
+				f^{(7)}(0) &= 7+0=7 \\
+				f^{(8)}(0) &= 8-128=-120 \\
+				f^{(9)}(0) &= 9+0=9 \\
+				f^{(10)}(0) &= 10+512=522
+			\end{flalign*}
+			$\therefore $ Polinomium taylornya adalah:
+			\begin{flalign*}
+				f(x) &= x + \frac{4}{2!}x^2 + \frac{3}{3!}x^3 - \frac{4}{4!}x^4 + \frac{5}{5!}x^5 + \frac{38}{6!}x^6 + \frac{7}{7!}x^7 - \frac{120}{8!}x^8 + \frac{9}{9!}x^9 + \frac{522}{10!}x^{10}
+			\end{flalign*}
+
+		% 4
+		\item Tentukan polinomium Taylor hingga derajat 6 untuk fungsi f di sekitar titik $x = 0$, apabila
+			\begin{gather}
+				\begin{align*}
+					f(x)=\frac{x^2-e^x}{2x-1}
+				\end{align*}
+			\end{gather}
+			\textbf{Jawab: }
+			\begin{flalign*}
+				f'(x) &= \frac{2x^2-2x-2xe^x+3ex}{(2x-1)^2} \\
+				f''(x) &= \frac{12xe^x-13e^x-4x^2e^x+2}{(2x-1)^3} \\
+				f'''(x) &= \frac{-72xe^x+79e^x+36x^2e^x+-8x^3e^x-12}{(2x-1)^4} \\
+				f^{(4)}(x) &= \frac{632xe^x-633e^x-312x^2e^x+96x^5e^x-16x^4e^x+96}{(2x-1)^5} \\
+				f^{(5)}(x) &= \frac{-6330xe^x+6331e^x-3160x^2e^x+1040x^3e^x+240^4e^x-32x^5e^x-960}{(2x-1)^6} \\
+				f^{(6)}(x) &= \frac{75972xe^x-75973e^x-37980x^2e^x+12640x^3e^x-3120x^4e^x+576x^5e^x-64x^6e^x+11520}{(2x-1)^7}
+			\end{flalign*}
+			\begin{flalign*}
+				f(0) &= \frac{0-1}{0-1} = 1 \\
+				f'(0) &= \frac{0-0-0+3}{(-1)^2} = 3 \\
+				f''(0) &= \frac{0-13-0+7}{(-1)^3} = 11 \\
+				f'''(0) &= \frac{0+79+0-0-12}{(-1)^4} = 67 \\
+				f^{(4)}(0) &= \frac{0-633-0+0-0+96}{(-1)^5} = 537 \\
+				f^{(5)}(0) &= \frac{0+6331+0-0+0-0-960}{(-1)^6} = 5371 \\
+				f^{(6)}(0) &= \frac{0-75973-0+0-0+0-0+11520}{(-1)^7} = 6445
+			\end{flalign*}
+
+		% 5
+		\item Tentukan polinonium Taylor hingga derajat 6 untuk fungsi f di sekitar titik $x = 0$, apabila
+			\begin{gather}
+				\begin{align*}
+					f(x)=\frac{cosx-e^x}{sinx}
+				\end{align*}
+			\end{gather}
+			\textbf{Jawab: } \\
+			\begin{tabular}{ c l }
+				$\therefore$ & Karena fungsi dan turunan-turunan dari fungsi tersebut memiliki penyebut $sin(0)$ yang mana \\ &  nilainya adalah 0, maka polinomium taylornya tidak ada.
+			\end{tabular}
+
+		% 6 
+		\item Tentukan polinonium Taylor fungsi $f$, sehingga nilai pendekatan $f(0.03)$ mempunyai galat tidak lebih dari 0.00035 apabila diberikan $f(x)=e^xsinx$. \\
+			\textbf{Jawab: }
+			\begin{flalign*}
+				f(x) &= e^xsinx \\
+				f'(x) &= e^x(sinx+cosx) \\
+				f''(x) &= e^x (2cosx) \\ 
+				f'''(x) &= e^x (2cosx-2sinx) \\
+				f^{(4)}(x) &= e^x (-4sinx) \\
+			\end{flalign*}
+			\begin{flalign*}
+				f(0) &= e^0sin0 = 0 \\
+				f'(0) &= e^0(sin0+cos0) = 1 \\
+				f''(0) &= e^0 (2cos0) = 2 \\ 
+				f'''(0) &= e^0 (2cos0-2sin0) = 2 \\
+				f^{(4)}(0) &= e^0 (-4sin0) = 0 \\
+			\end{flalign*}
+			$\therefore $ Polinomium taylornya adalah:
+			\begin{flalign*}
+				f(x) &= x \frac{2}{2!}x^2 + \frac{2}{3!}x^3 \\
+					 &= x+x^2+\frac{1}{3}x^3
+			\end{flalign*}
+			Hitung galat $x = 0.03$ $R_{4}(x) = \frac{f^{(4)}(c)x^4}{4!}$, dengan 0\textless c\textless 0.03
+			\begin{flalign*}
+				f^{(4)}(x) &= -4e^xsinx\text{, maka} \\
+				\abs{f^{(4)}(c)} &\leq 4e^{0.003} \cdot \abs{ sin(0.03) } \approx 0.123 \\ 
+				\abs{R_{4}(0.003)} &\leq \frac{0.123}{24} \cdot (0.03)^4 \\ 
+								 &\approx 4.2 \cdot 10^{-16}
+			\end{flalign*}
+			\begin{tabular}{ c l }
+				$\therefore$ & Karena galat $R_4 \leq 0.0035$, polinomium taylor derajat 3 sudah \\ &cukup untuk memenuhi syarat galat yang diberikan.
+			\end{tabular}
+			\begin{flalign*}
+				f(x)&=x+x^2+\frac{1}{3}x^3 \\
+				f(0.003)&=0.003+(0.003)^2+\frac{1}{3}(0.003)^3 \\
+					&\approx 0.03 + 0.0009 + 0.000027 \\ 
+					&\approx 0.030927
+			\end{flalign*}
+
+		% 7
+		\item Tentukan polinonium Taylor untuk fungsi $f$, sehingga nilai pendekatan $f(2.3)$ mempunyai galat tidak lebih dari 0.005 apabila diberikan $f(x)=e^x-sinx$. \\
+			\textbf{Jawab: }
+			\begin{flalign*}
+				f(x) &= e^x-sinx \\
+				f'(x) &= e^x-cosx \\
+				f''(x) &= e^x+sinx \\
+				f'''(x) &= e^x+cosx \\
+				f^{(4)}(x) &= e^x-sinx \\
+				f^{(5)}(x) &= e^x-cosx
+			\end{flalign*}
+			\begin{flalign*}
+				f(0) &= 1-0=1 \\
+				f'(0) &= 1-1=0 \\
+				f''(0) &= 1+0=1 \\
+				f'''(0) &= 1+1=2 \\
+				f^{(4)}(0) &= 1-0=1 \\
+				f^{(5)}(0) &= 1-1=0 \\
+			\end{flalign*}
+			$\therefore $ Polinomium taylornya adalah:
+			\begin{flalign*}
+				f(x) &= 1 + \frac{x}{2!} + \frac{2x^3}{3!} + \frac{x^4}{4!}
+			\end{flalign*}
+			Hitung galat $x = 2.3$ $R_{5}(x) = \frac{f^{(5)}(c)x^5}{5!}$, dengan 0\textless c\textless 2.3
+			\begin{flalign*}
+				f^{(5)}(x) &= e^x-cosx \\
+				f^{(5)}(2.3) &= e^{2.3}-cos2.3 \\
+							 &\approx 5.71
+			\end{flalign*}
+			\begin{tabular}{ c l }
+				$\therefore$ & Karena galat lebih bisar dari 0.005, kita menggunakan \\ & polinomium taylor derajat yang lebih tinggi
+			\end{tabular}
+
+		% 8 
+		\item Tentukan polinonium Taylor untuk fungsi $f$, sehingga nilai pendekatan $f(3)$ mempunyai galat tidak lebih dari 0.0035 apabila diberikan $f(x)=\frac{x^2e^x}{2x-1}$. \\
+			\textbf{Jawab: }
+			Rumus galat dari polinomium taylor dapat dinyatakan 
+			\[
+				R_n(x)=\frac{f(c)}{(n+1)!}x
+			\]
+			Nilai c dinyatakan antara 0 dan x, $\abs{ R_n(3) } \leq 0.0035$
+			\begin{flalign*}
+				R_1(x) &= \frac{x^2-e^x}{2x-1} \text{, dengan 0\textless c\textless 3}\\
+				f(x) &= \frac{x^2-e^x}{2x-1} \\
+				f(3) &= \frac{3^2-e^3}{2(3)-1} \approx -2.217 \\
+				\abs{ R_1(3) } &\leq \frac{2.217}{1!} \cdot (3) \\
+						   &\approx -6.651
+			\end{flalign*}
+			\begin{tabular}{ c l }
+				$\therefore$ & Karena galat $R_3 \leq 0.0035$, polinomium taylor derajat 0 sudah\\ & cukup untuk memenuhi syarat galat yang diberikan
+			\end{tabular}
+
+		% 9
+		\item Tentukan polinonium Taylor untuk fungsi $f$, sehingga nilai pendekatan $f(2)$ mempunyai galat tidak lebih dari 0.005 apabila diberikan $f(x)=\frac{cosx-e^x}{sinx}$. \\
+		\textbf{Jawab: } \\
+		\begin{tabular}{ c l }
+			$\therefore$ & Karena fungsi dan turunan-turunan dari fungsi tersebut memiliki penyebut $sin(0)$ yang mana \\ &  nilainya adalah 0, maka polinomium taylornya tidak ada.
+		\end{tabular}
+
+		% 10
+		\item Tentukan nilai Galat $(x_A)$ dan Rel $(x_A)$ apabila diberikan 
+			\begin{enumerate}[label=\alph*)]
+				\item $x_A=37.658$ \text{dan} $x_T = 37.663$
+				\item $x_A=54.9032$ \text{dan} $x_T = 54.8984$
+				\item $x_A=2.98732$ \text{dan} $x_T = 2.98694$
+			\end{enumerate}
+			\textbf{Jawab: }
+			\begin{enumerate}[label=\alph*)]
+				\item $x_A=37.658$ \text{dan} $x_T = 37.663$
+					\begin{align*}
+						\cdot \text{ Galat} &= \abs{ 37.663-37.658 } = 0.005 \\
+						\cdot \text{ Relatif} &= \abs{ \frac{0.005}{37.658} } \cdot 100\% = 0.00132 \\
+					\end{align*}
+				\item $x_A=54.9032$ \text{dan} $x_T = 54.8984$
+					\begin{align*}
+						\cdot \text{ Galat} &= \abs{ 54.8984 - 54.9032 } = 0.0048 \\
+						\cdot \text{ Relatif} &= \abs{ \frac{0.0048}{54.8984} } \cdot 100\% = 0.00087 \\
+					\end{align*}
+				\item $x_A=2.98732$ \text{dan} $x_T = 2.98694$
+					\begin{align*}
+						\cdot \text{ Galat} &= \abs{ 2.98732 - 2.98694 } = 0.00038 \\
+						\cdot \text{ Relatif} &= \abs{ \frac{0.00038}{2.98694} } \cdot 100\% = 0.01 
+					\end{align*}
+			\end{enumerate}
+
+		% 11 
+		\item Tentukan galat terkecil dari nilai $y$, apabila
+			\begin{enumerate}[label=\alph*.)]
+				\item $y=x^3+3x^2+2x+1$
+				\item $y=2x+3(2x^2+x+1)$
+			\end{enumerate}
+			untuk ketiga nilai x pada soal nomor 10 di atas. \\
+			\textbf{Jawab: }
+			\begin{enumerate}[label=\arabic*.)]
+				\item $x_A=37.658$ \text{dan} $x_T = 37.663$
+					\begin{enumerate}[label=\alph*.)]
+						\item \text{Galat= } 22.415
+						\item \text{Galat= } 2.285
+					\end{enumerate}
+				\item $x_A=54.9032$ \text{dan} $x_T = 54.8984$
+					\begin{enumerate}[label=\alph*.)]
+						\item \text{Galat= } 44.994
+						\item \text{Galat= } 3.186
+					\end{enumerate}
+				\item $x_A=2.98732$ \text{dan} $x_T = 2.98694$
+					\begin{enumerate}[label=\alph*.)]
+						\item \text{Galat= } 0.018
+						\item \text{Galat= } 0.016
+					\end{enumerate}
+			\end{enumerate}
+
+		% 12
+		\item Apabila diberikan $x_A=7.582$ dengan galat tidak lebih dari 0.003 tentukan:\\
+			Galat$(f(x_A))$ apabila diberikan $f(x)=2xe^x+sinx$.\\
+			\textbf{Jawab: } \\
+			Galat$(f(x_A)) \cdot f(x_A) \cdot $ \text{ Galat} $(x_A)$
+			\begin{flalign*}
+				f(x_A) &= 2xe^x+sinx \\
+				f'(x_A) &= 2xe^x+2xe^x+cosx \\
+				f'(7.582) &= 33689.479 \\
+				f'(7.582)\cdot \text{Galat ($x_A$)} &= 33689.479 \cdot 0.003 \\
+													&= 101.056
+			\end{flalign*}
+			$\therefore$ nilai Galat$(f(x_A))$ bila $f(x)=2xe^x+sinx$ adalah 101.056
+
+		% 13
+		\item Apabila diberikan $x_A=7.582$ dengan galat tidak lebih dari 0.003 tentukan:\\
+			Galat$(f(x_A))$ apabila diberikan $f(x)=e^{sinx}sinx$.\\
+			\textbf{Jawab: } \\
+			Galat$(f(x_A)) \cdot f(x_A) \cdot $ \text{ Galat} $(x_A)$
+			\begin{flalign*}
+				f(x_A) &= e^{sinx}sinx \\
+				f'(x_A) &= e^{sinx}\cdot cosx\cdot sinx+e^{sinx} \\
+				f'(5.728) &= 0.23723 \\
+				f'(5.728)\cdot \text{Galat ($x_A$)} &= 0.005 \cdot 0.23723 \\
+													&= 0.001186
+			\end{flalign*}
+			$\therefore$ nilai Galat$(f(x_A))$ bila $f(x)=e^{sinx}sinx$ adalah 0.001186
+
+		% 14
+		\item Apabila diberikan $x_A=7.582$ dengan galat tidak lebih dari 0.005 tentukan:\\
+			Galat$(f(x_A))$ apabila diberikan $f(x)=\frac{cosx-e^x}{sinx}$.\\
+			\textbf{Jawab: } \\
+			Galat$(f(x_A)) \cdot f(x_A) \cdot $ \text{ Galat} $(x_A)$
+			\begin{flalign*}
+				f(x_A) &= \frac{(-1)-e^x\cdot sinx+e^x\cdot cosx}{sin^2x} \\
+				f'(x_A) &= e^{sinx}\cdot cosx\cdot sinx+e^{sinx}\\
+				f'(7.582) &= 1470.29473 \\
+				f'(7.582)\cdot \text{Galat ($x_A$)} &= 1470.29473 \cdot 0.005 \\
+													&= 7.351
+			\end{flalign*}
+			$\therefore$ nilai Galat$(f(x_A))$ bila $f(x)=\frac{cosx-e^x}{sinx}$ adalah 7.351
+
+		% 15
+		\item Apabila diberikan $x_A=7.582$ dengan galat tidak lebih dari 0.005 tentukan:\\
+			Rel$(f(x_A))$ apabila diberikan $f(x)=\frac{cosx-e^x}{sinx}$.\\
+			\textbf{Jawab: } \\
+			Galat$(f(x_A)) \cdot f(x_A) \cdot $ \text{ Galat} $(x_A)$
+			\begin{flalign*}
+				f(x_A) &= \frac{(-1)-e^x\cdot sinx+e^x\cdot cosx}{sin^2x} \\
+				f'(x_A) &= e^{sinx}\cdot cosx\cdot sinx+e^{sinx}\\
+				f'(7.582) &= 1470.29473 \\
+				f'(7.582)\cdot \text{Rel ($x_A$)} &= \abs{\frac{1470.29\cdot 0.005}{2037.16}} \cdot 100\% \\
+												  &= 0.21\%
+			\end{flalign*}
+			$\therefore$ nilai Rel$(f(x_A))$ bila $f(x)=\frac{cosx-e^x}{sinx}$ adalah 0.21\%
+
+		% 16
+		\item Apabila diberikan $x_A=5.728$ dengan galat tidak lebih dari 0.003 tentukan:\\
+			Rel$(f(x_A))$ apabila diberikan $f(x)=e^{sinx}sinx$.\\
+			\textbf{Jawab: } \\
+			Galat$(f(x_A)) \cdot f(x_A) \cdot $ \text{ Galat} $(x_A)$
+			\begin{flalign*}
+				f(x_A) &= e^{sinx}sinx\\ \\
+				f'(x_A) &= e^{sinx}\cdot cosx\cdot sinx+e^{sinx}\\
+				f'(5.728) &= 0.2337 \\
+				f'(5.728)\cdot \text{Rel ($x_A$)} &= \abs{\frac{0.2337\cdot 0.003}{0.31115}} \cdot 100\% \\
+												  &= 0.38\%
+			\end{flalign*}
+			$\therefore$ nilai Rel$(f(x_A))$ bila $f(x)=\frac{cosx-e^x}{sinx}$ adalah 0.38\%
+
+		% 17
+		\item Apabila diberikan $x_A=7.582$ dengan galat tidak lebih dari 0.005 tentukan:\\
+			Rel$(f(x_A))$ apabila diberikan $f(x)=\frac{x^2-e^x}{2x-1}$.\\
+			\textbf{Jawab: } \\
+			Galat$(f(x_A)) \cdot f(x_A) \cdot $ \text{ Galat} $(x_A)$
+			\begin{flalign*}
+				f(x_A) &= \frac{x^2-e^x}{2x-1}\\ \\
+				f'(x) &= \frac{2x^2-2x-2xe^x+3ex}{(2x-1)^2} \\
+				f'(7.582) &\approx 118.5 \\
+				f'(7.582\cdot \text{Rel ($x_A$)} &= \abs{\frac{118.5\cdot 0.005}{134.5}} \cdot 100\% \\
+												  &= 0.44\%
+			\end{flalign*}
+			$\therefore$ nilai Rel$(f(x_A))$ bila $f(x)=\frac{x^2-e^x}{2x-1}$ adalah 0.44\%
+
+	\end{enumerate}
+\end{document}
